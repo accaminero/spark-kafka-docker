@@ -5,7 +5,7 @@ services:
       ports:
         - "2181:2181"
     kafka:
-      build: .
+      image: wurstmeister/kafka
       ports:
         - "9092"
       environment:
@@ -15,7 +15,7 @@ services:
         - /var/run/docker.sock:/var/run/docker.sock
 
     master:
-      image: accaminero/docker-spark
+      image: accaminero/docker-spark:spark2.3.0-hadoop2.8.3
       command: bin/spark-class org.apache.spark.deploy.master.Master -h master
       hostname: master
       environment:
@@ -43,7 +43,7 @@ services:
         - ./data:/tmp/data
 
     worker1:
-      image: accaminero/docker-spark
+      image: accaminero/docker-spark:spark2.3.0-hadoop2.8.3
       command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
       hostname: worker1
       environment:
@@ -69,7 +69,7 @@ services:
         - ./data:/tmp/data
 
     worker2:
-      image: accaminero/docker-spark
+      image: accaminero/docker-spark:spark2.3.0-hadoop2.8.3
       command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
       hostname: worker2
       environment:
@@ -95,7 +95,7 @@ services:
         - ./data:/tmp/data
 
     worker3:
-      image: accaminero/docker-spark
+      image: accaminero/docker-spark:spark2.3.0-hadoop2.8.3
       command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
       hostname: worker3
       environment:
